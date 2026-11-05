@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#194d3a">
+  <title>EatMeFirst | Admin Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--green:#1d6549;--dark:#183d2c;--ink:#233b30;--soft:#eef6ed;--muted:#819486;--border:#e5ebe4;--orange:#e6a654;--red:#d47769;font-family:Prompt,system-ui,sans-serif;color:var(--ink);background:#f7f9f5}
+    *{box-sizing:border-box}body{margin:0}button,input,select,textarea{font:inherit}button{cursor:pointer}
+    button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #9bd6a7;outline-offset:2px}
+    .hidden,[hidden]{display:none!important}.shell{display:grid;grid-template-columns:255px minmax(0,1fr);min-height:100vh}
+    .sidebar{background:#fff;border-right:1px solid var(--border);padding:30px 17px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh}
+    .logo{display:flex;align-items:center;gap:9px;padding:0 13px 39px;text-decoration:none;color:var(--dark)}
+    .logo-mark{height:39px;width:39px;border-radius:12px;display:grid;place-items:center;background:#dff0db;font-size:21px}.logo strong{font:800 22px 'DM Sans',sans-serif;letter-spacing:-1px}.logo strong span{color:#f27a61}.logo small{display:block;color:#94a596;font-size:9px;letter-spacing:1.3px;margin-top:3px}
+    .nav-title{font-size:10px;font-weight:700;letter-spacing:1.9px;color:#9eaca0;margin:0 13px 14px}.nav{display:grid;gap:6px}
+    .nav button{background:transparent;border:0;text-align:left;padding:13px 16px;border-radius:12px;font-size:12px;font-weight:600;color:#829285}.nav button span{font-size:17px;margin-right:13px}.nav button.active,.nav button:hover{color:#1e6547;background:#eaf5e8}
+    .sidebar-foot{margin-top:auto;background:#eaf5e3;border-radius:17px;padding:17px}.sidebar-foot b{font-size:13px}.sidebar-foot p{font-size:10px;line-height:1.8;color:#6d8a70}.sidebar-foot a{font-size:11px;color:#2b7551;text-decoration:none;font-weight:700}
+    main{min-width:0;padding:0 39px 48px}.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;height:84px;border-bottom:1px solid var(--border);margin-bottom:29px}
+    .crumb{font-size:12px;color:#90a194}.crumb b{color:#2e5441}.top-actions{display:flex;gap:10px;align-items:center}.admin-email{font-size:11px;color:#738b78;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .btn{border:0;background:var(--green);color:#fff;padding:11px 16px;border-radius:10px;font-size:12px;font-weight:650;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+    .btn:hover{filter:brightness(.95)}.btn:disabled{opacity:.5;cursor:not-allowed}.btn-ghost{background:#edf4ed;color:#336747}.btn-white{background:#fff;border:1px solid #dfe9df;color:#417456}.btn-red{background:#fdf0ed;color:#b35d50}
+    .page{display:none}.page.active{display:block}.eyebrow{letter-spacing:2.1px;color:#7ba48b;font:800 10px 'DM Sans',sans-serif}.heading{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:21px;flex-wrap:wrap}
+    h1{font-size:30px;letter-spacing:-1.2px;margin:7px 0}h2{font-size:17px;margin:0 0 5px}p{line-height:1.75}h1+p,.desc{margin:0;color:var(--muted);font-size:11px}
+    .kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:15px;margin-bottom:20px}.kpi{min-height:141px;padding:21px;border:1px solid var(--border);background:#fff;border-radius:18px}.kpi small{font-size:11px;color:#91a192}.kpi .value{font:800 32px 'DM Sans',sans-serif;letter-spacing:-1px;color:var(--dark);margin:17px 0 3px}.kpi .footnote{font-size:10px;color:#98a798}.kpi:nth-child(2) .value{color:#bd8b39}.kpi:nth-child(3) .value{color:#c77066}.kpi:nth-child(4) .value{color:#4c9765}
+    .duo{display:grid;grid-template-columns:1.2fr .8fr;gap:19px}.panel{background:#fff;border:1px solid var(--border);border-radius:20px;padding:24px;margin-bottom:19px;min-width:0}.panel-head{display:flex;align-items:start;justify-content:space-between;gap:12px;margin-bottom:18px}.panel-head small{color:#91a295;font-size:10px}
+    .stat-graphic{height:245px;padding:9px 0 0}.stat-graphic svg{width:100%;height:100%;overflow:visible}.chart-axis{font:10px 'DM Sans',sans-serif;fill:#a0afa5}
+    .category-row{display:grid;grid-template-columns:112px 1fr 42px;align-items:center;gap:11px;margin:17px 0;font-size:11px}.category-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.track{height:9px;border-radius:30px;background:#f0f3ee;overflow:hidden}.track i{height:100%;background:#64a47a;display:block;border-radius:30px}.category-row:nth-child(2n) .track i{background:#dfad6d}.category-row:nth-child(3n) .track i{background:#8db5d7}
+    .insights{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.insight{border-radius:16px;background:#f0f7ec;padding:18px}.insight:nth-child(2){background:#fff5e8}.insight:nth-child(3){background:#eef5f7}.insight b{display:block;font:800 26px 'DM Sans';margin:9px 0 3px}.insight span{font-size:11px;color:#6a826f}
+    .table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:650px}th,td{text-align:left;padding:15px 12px;border-bottom:1px solid #edf1eb;font-size:11px;white-space:nowrap}th{color:#8a9e8e;font-size:10px;font-weight:650}td{color:#37513f}.tag{display:inline-block;padding:6px 9px;border-radius:100px;background:#ebf7ed;color:#42835b;font-size:10px;font-weight:650}.tag.off{background:#fff0ec;color:#c07165}
+    .table-tools{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px}input,select,textarea{border:1px solid #dce8dc;padding:11px 13px;border-radius:10px;background:#fff;color:#294535;min-height:42px}input[type=search]{width:min(320px,100%)}textarea{resize:vertical;min-height:105px;width:100%}
+    .issue{border-bottom:1px solid #ecf0eb;padding:17px 0}.issue:last-child{border:0}.issue-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.issue p{margin:8px 0;font-size:12px;color:#3f5b49;white-space:pre-wrap;overflow-wrap:anywhere}.issue small{font-size:10px;color:#99a89b}.issue-actions{margin-top:11px}
+    .form-fields{display:grid;gap:15px;max-width:520px}.form-fields label{display:grid;gap:7px;font-size:12px;color:#496c53;font-weight:650}.helper{font-size:11px;color:#89a18f;font-weight:400}
+    .empty{text-align:center;padding:28px;color:#94a398;font-size:12px;background:#fafcf8;border-radius:14px}.statusbox{background:#eef7e9;border:1px solid #d8ead8;border-radius:15px;color:#447454;padding:14px 18px;font-size:12px;line-height:1.7;margin-bottom:20px}.statusbox.error{background:#fff1ed;color:#a75e53;border-color:#f2d9d2}
+    .gate{min-height:100dvh;display:grid;place-items:center;padding:25px;background:radial-gradient(circle at top left,#e4f2df,#fafbf7 47%,#fff8ee)}.gate-card{width:min(450px,100%);background:#fff;border:1px solid #e0ecdd;border-radius:25px;padding:36px;box-shadow:0 23px 70px #244c2b18}
+    .gate-card h1{font-size:25px}.gate-card p{font-size:12px;color:#86988a}.gate-card label{display:grid;gap:7px;font-size:12px;margin:14px 0;color:#49654f}.gate-card input{width:100%}.gate-card .btn{width:100%;margin-top:13px}.gate-card a{display:block;text-align:center;font-size:12px;margin-top:20px;color:#477a57}.hint{font-size:11px;color:#83968a;line-height:1.7}
+    #toast{position:fixed;right:20px;bottom:20px;background:#1f6548;color:#fff;border-radius:11px;padding:14px 18px;max-width:420px;box-shadow:0 12px 34px #244d3244;font-size:12px;z-index:20;display:none}
+    @media(max-width:1120px){main{padding:0 21px 35px}.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.duo{grid-template-columns:1fr}}
+    @media(max-width:760px){.shell{grid-template-columns:1fr}.sidebar{position:static;width:100%;height:auto;padding:15px}.logo{padding:0 0 13px}.nav{display:flex;gap:6px;overflow-x:auto}.nav button{white-space:nowrap;padding:10px 12px}.nav-title,.sidebar-foot{display:none}main{padding:0 14px 30px}.topbar{height:68px}.admin-email{display:none}.kpis{gap:9px}.kpi{padding:17px;min-height:120px}.kpi .value{font-size:27px}.insights{grid-template-columns:1fr}.heading h1{font-size:25px}.panel{padding:18px}}
+  </style>
+  <script data-embedded-source="eatmefirst-config.js">
+/* EatMeFirst — ตั้งค่า Supabase เพียงไฟล์เดียวสำหรับ index.html + admin.html
+ * Project URL และ publishable/anon key นำมาจาก Supabase > Project Settings > API Keys.
+ * โปรดอย่าใส่ Secret Key, service_role, รหัสผ่านของผู้ดูแล หรือข้อมูลส่วนตัวในไฟล์นี้
+ * เพราะ GitHub Pages เป็นเว็บไซต์สาธารณะ ใคร ๆ ก็เปิดดูไฟล์ JavaScript ได้.
+ */
+window.EATMEFIRST_AUTH_CONFIG = {
+  url: 'https://miffgjywkhzjqmuggnjq.supabase.co',
+  publishableKey: 'sb_publishable_6KfeW6GTMWwbU-ZMemeZFQ_LUwdfuID'
+};
+
+</script>
+  <script>
+    // Public config fallback: admin.html can be uploaded by itself to GitHub Pages.
+    // Publishable key is browser-safe with RLS enabled; NEVER put a Supabase secret key here.
+    window.EATMEFIRST_AUTH_CONFIG = window.EATMEFIRST_AUTH_CONFIG || {
+      url: 'https://miffgjywkhzjqmuggnjq.supabase.co',
+      publishableKey: 'sb_publishable_6KfeW6GTMWwbU-ZMemeZFQ_LUwdfuID'
+    };
+  </script>
+</head>
+<body>
+<div id="login-gate" class="gate">
+  <div class="gate-card">
+    <div class="logo"><span class="logo-mark">🍅</span><div><strong>EatMe<span>First</span></strong><small>ADMIN STUDIO</small></div></div>
+    <span class="eyebrow">PRIVATE CONTROL CENTER</span>
+    <h1>ยินดีต้อนรับหลังบ้าน 💚</h1><p>บัญชีผู้ดูแลระบบแยกจากบัญชีสมาชิกทั่วไป</p>
+    <div id="gate-message" class="statusbox" role="status">กำลังตรวจสอบการเชื่อมต่อ…</div>
+    <form id="admin-login" hidden>
+      <label>ชื่อผู้ใช้แอดมิน <input id="email" type="text" value="admin" autocomplete="username" required readonly></label>
+      <label>รหัสผ่าน <input id="password" type="password" autocomplete="current-password" required></label>
+      <button type="submit" class="btn">เข้าสู่ระบบหลังบ้าน Admin</button>
+    </form>
+    <button id="gate-logout" class="btn btn-ghost" type="button" hidden>ออกจากบัญชีนี้เพื่อเปลี่ยนบัญชี</button>
+    <a href="index.html" target="_top">← กลับไปหน้า EatMeFirst</a>
+  </div>
+</div>
+
+<div id="admin-shell" class="shell hidden">
+  <aside class="sidebar">
+    <a class="logo" href="index.html" target="_top"><span class="logo-mark">🍅</span><div><strong>EatMe<span>First</span></strong><small>ADMIN STUDIO</small></div></a>
+    <div class="nav-title">WORKSPACE</div>
+    <nav class="nav" aria-label="เมนูผู้ดูแลระบบ">
+      <button type="button" data-page="overview" class="active"><span>◫</span> ภาพรวมระบบ</button>
+      <button type="button" data-page="members"><span>♧</span> สมาชิก</button>
+      <button type="button" data-page="reports"><span>▥</span> รายงานและกราฟ</button>
+      <button type="button" data-page="feedback"><span>✉</span> กล่องข้อความ</button>
+      <button type="button" data-page="settings"><span>⚙</span> ตั้งค่าเว็บไซต์</button>
+      <button type="button" data-page="audit"><span>◷</span> ประวัติ Admin</button>
+    </nav>
+    <div class="sidebar-foot"><b>🌱 Every bite matters.</b><p>ดูภาพรวมการลดอาหารเหลือทิ้ง โดยเคารพความเป็นส่วนตัวของสมาชิกทุกคน</p><a href="index.html" target="_top">เปิดหน้าสมาชิก ↗</a></div>
+  </aside>
+  <main>
+    <header class="topbar"><div class="crumb">EatMeFirst <b>›</b> <b id="page-title">ภาพรวมระบบ</b></div><div class="top-actions"><span id="admin-email" class="admin-email"></span><button id="refresh" class="btn btn-white" type="button">↻ รีเฟรช</button><button id="logout" class="btn btn-ghost" type="button">ออกจากระบบ</button></div></header>
+    <div id="statusline" class="statusbox" role="status" hidden></div>
+    <section id="page-overview" class="page active">
+      <div class="heading"><div><div class="eyebrow">LIVE DASHBOARD</div><h1>ภาพรวม EatMeFirst</h1><p>ข้อมูลรวมจากฐานข้อมูลจริง ไม่แสดงข้อมูลอาหารส่วนตัวรายคน</p></div><span id="updated" class="desc">ยังไม่มีข้อมูล</span></div>
+      <div class="kpis"><div class="kpi"><small>สมาชิกทั้งหมด</small><div id="k-members" class="value">—</div><div class="footnote">บัญชีที่สมัครใช้บริการ</div></div><div class="kpi"><small>อาหารในระบบ</small><div id="k-foods" class="value">—</div><div class="footnote">นับทุกรายการจากทุกบัญชี</div></div><div class="kpi"><small>ใกล้หมดอายุ (3 วัน)</small><div id="k-soon" class="value">—</div><div class="footnote">อาหารที่ยังอยู่ในตู้เย็น</div></div><div class="kpi"><small>กินทันแล้ว</small><div id="k-eaten" class="value">—</div><div class="footnote">รายการที่ปิดด้วยสถานะกินแล้ว</div></div></div>
+      <div class="duo"><div class="panel"><div class="panel-head"><div><h2>สมาชิกใหม่ 7 วันล่าสุด</h2><small>แนวโน้มจำนวนสมาชิกใหม่แต่ละวัน</small></div><span class="tag">ล่าสุด</span></div><div id="trend-chart" class="stat-graphic"><div class="empty">กำลังโหลดข้อมูล</div></div></div><div class="panel"><div class="panel-head"><div><h2>หมวดหมู่อาหารยอดนิยม</h2><small>สัดส่วนจำนวนรายการอาหาร</small></div></div><div id="category-chart"><div class="empty">กำลังโหลดข้อมูล</div></div></div></div>
+      <div class="insights"><div class="insight"><span>สมาชิกใช้งานภายใน 30 วัน</span><b id="i-active">—</b></div><div class="insight"><span>อาหารหมดอายุค้างในระบบ</span><b id="i-expired">—</b></div><div class="insight"><span>ข้อความที่รอตอบ</span><b id="i-feedback">—</b></div></div>
+    </section>
+    <section id="page-members" class="page"><div class="heading"><div><div class="eyebrow">MEMBER MANAGEMENT</div><h1>สมาชิกทั้งหมด</h1><p>ตรวจสอบสมาชิกและระงับการเข้าถึงข้อมูลเมื่อจำเป็น</p></div><button class="btn btn-white" id="export-members" type="button">↓ ส่งออก CSV</button></div><div class="panel"><div class="table-tools"><input id="member-search" type="search" placeholder="ค้นหาอีเมลสมาชิก…" aria-label="ค้นหาสมาชิก"><span id="member-count" class="desc"></span></div><div class="table-wrap"><table><thead><tr><th>อีเมล</th><th>สมัครเมื่อ</th><th>จำนวนอาหาร</th><th>ซิงก์ล่าสุด</th><th>สถานะ</th><th>จัดการ</th></tr></thead><tbody id="member-rows"></tbody></table></div><p class="hint">เพื่อความปลอดภัย Admin สามารถระงับหรือปลดระงับบัญชีได้ แต่ดูรหัสผ่านไม่ได้ และไม่สามารถอ่านข้อมูลอาหารส่วนตัวรายคนจากตารางนี้</p></div></section>
+    <section id="page-reports" class="page"><div class="heading"><div><div class="eyebrow">FOOD IMPACT</div><h1>วิเคราะห์การลด Food Waste</h1><p>สถิติภาพรวมสำหรับนำไปใช้ในรายงานโครงงาน</p></div><button type="button" id="export-report" class="btn btn-white">↓ ดาวน์โหลดสถิติ CSV</button></div><div class="kpis"><div class="kpi"><small>กินหมดแล้ว</small><div class="value" id="r-eaten">—</div></div><div class="kpi"><small>ทิ้งแล้ว</small><div class="value" id="r-wasted">—</div></div><div class="kpi"><small>อัตรากินทัน</small><div class="value" id="r-rate">—</div></div><div class="kpi"><small>ใกล้หมดอายุ</small><div class="value" id="r-soon">—</div></div></div><div class="duo"><div class="panel"><h2>มูลค่าอาหารที่กินทัน (ประมาณ)</h2><h1 id="r-used-value" style="color:#37855b">—</h1><p class="desc">ประเมินจากราคาที่สมาชิกกรอก ไม่ใช่มูลค่าการประหยัดสุทธิ</p></div><div class="panel"><h2>มูลค่าอาหารที่ทิ้ง (ประมาณ)</h2><h1 id="r-wasted-value" style="color:#c77b65">—</h1><p class="desc">รวมเฉพาะรายการที่สมาชิกระบุว่าทิ้งแล้ว</p></div></div><div class="panel"><h2>วิธีอ่านรายงาน</h2><p class="desc">อัตรากินทัน = จำนวนรายการที่กินหมด ÷ (กินหมด + ทิ้ง) × 100 • ข้อมูลเป็นการรายงานโดยผู้ใช้ จึงไม่ควรถือเป็นการตรวจวัดขยะอาหารจริงทั้งหมด</p></div></section>
+    <section id="page-feedback" class="page"><div class="heading"><div><div class="eyebrow">VOICE OF USERS</div><h1>กล่องรับแจ้งปัญหา</h1><p>รวบรวมปัญหา AI ตีความผิด ข้อบกพร่อง และไอเดียจากสมาชิก</p></div><button id="refresh-feedback" class="btn btn-white" type="button">↻ โหลดใหม่</button></div><div class="panel"><div id="feedback-list"><div class="empty">กำลังโหลดข้อมูล</div></div></div></section>
+    <section id="page-settings" class="page"><div class="heading"><div><div class="eyebrow">APPLICATION SETTINGS</div><h1>ตั้งค่า EatMeFirst</h1><p>ค่าที่ปรับตรงนี้มีผลต่อสมาชิกเมื่อเข้าสู่ระบบหรือรีเฟรชหน้าเว็บ</p></div></div><div class="panel"><form id="settings-form" class="form-fields"><label>แจ้งเตือนก่อนวันควรใช้ / ตรวจความสด (วัน)<select id="alert-days" required><option value="1">1 วัน</option><option value="2">2 วัน</option><option value="3">3 วัน</option><option value="5">5 วัน</option><option value="7">7 วัน</option><option value="10">10 วัน</option><option value="14">14 วัน</option></select></label><label>ประกาศบนหน้าเว็บ <textarea id="announcement" maxlength="200" placeholder="เช่น มีฟีเจอร์ใหม่ให้ทดลองแล้ว!"></textarea><span class="helper">สูงสุด 200 ตัวอักษร เว้นว่างหากไม่ต้องการประกาศ</span></label><div><button class="btn" type="submit">บันทึกการตั้งค่า</button></div></form></div><div class="panel"><h2>การตั้งค่าความปลอดภัย</h2><p class="hint">การตรวจสอบอีเมล รหัสผ่าน การจำกัดจำนวนครั้งที่ล็อกอิน และอัตราการส่งอีเมล ต้องจัดการในหน้า Authentication ของ Supabase เพื่อให้บังคับใช้จริงจากฝั่งบริการ</p></div></section>
+    <section id="page-audit" class="page"><div class="heading"><div><div class="eyebrow">SECURITY AUDIT</div><h1>ประวัติการจัดการ</h1><p>บันทึกการเปลี่ยนสถานะสมาชิก การตั้งค่า และการจัดการปัญหา</p></div></div><div class="panel"><div class="table-wrap"><table><thead><tr><th>เวลา</th><th>กิจกรรม</th><th>บัญชีที่เกี่ยวข้อง</th><th>รายละเอียด</th></tr></thead><tbody id="audit-rows"></tbody></table></div></div></section>
+  </main>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script>
+(()=>{'use strict';
+  const config=window.EATMEFIRST_AUTH_CONFIG||{};
+  // ชื่อผู้ใช้ที่แสดงคือ admin; รหัสผ่านต้องถูกตรวจผ่าน Supabase Auth เท่านั้น
+  // ห้ามใส่รหัสผ่าน Admin ใน JavaScript หรือ GitHub Pages เพราะทุกคนเปิดดู Source ได้
+  const ADMIN_USERNAME='admin';
+  const ADMIN_AUTH_EMAIL='admin@eatmefirst.invalid';
+  const valid=/^https:\/\/[a-z0-9.-]+\.supabase\.co\/?$/i.test(config.url||'')&&String(config.publishableKey||'').length>10;
+  const $=id=>document.getElementById(id);
+  const safe=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const fmt=n=>Number(n||0).toLocaleString('th-TH');
+  const date=s=>s?new Date(s).toLocaleString('th-TH',{dateStyle:'medium',timeStyle:'short',timeZone:'Asia/Bangkok'}):'ยังไม่เคยซิงก์';
+  const money=n=>'฿'+Number(n||0).toLocaleString('th-TH',{maximumFractionDigits:2});
+  const catNames={vegetable:'ผัก',fruit:'ผลไม้',meat:'เนื้อสัตว์',dairy:'นมและไข่',bakery:'ขนมปัง',other:'อื่น ๆ'};
+  let supabase=null,user=null,memberData=[],overview={},insights={},feedback=[],settings={};
+  const navNames={overview:'ภาพรวมระบบ',members:'สมาชิก',reports:'รายงานและกราฟ',feedback:'กล่องข้อความ',settings:'ตั้งค่าเว็บไซต์',audit:'ประวัติ Admin'};
+  function msg(text,bad=false){$('gate-message').textContent=text;$('gate-message').classList.toggle('error',bad);}
+  function notice(text,bad=false){const el=$('statusline');el.hidden=!text;el.textContent=text;el.classList.toggle('error',bad);}
+  let toastTimer;
+  function toast(text){const el=$('toast');el.textContent=text;el.style.display='block';clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.style.display='none',4000);}
+  function showGate(text,bad=false){$('login-gate').classList.remove('hidden');$('admin-shell').classList.add('hidden');msg(text,bad);}
+  function showAdmin(){ $('login-gate').classList.add('hidden');$('admin-shell').classList.remove('hidden');$('admin-email').textContent=user?.email||'Admin'; }
+  async function query(promise){const result=await promise;if(result.error)throw result.error;return result.data;}
+  function switchPage(name){
+    if(!navNames[name])return;
+    document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===name));
+    document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+name));
+    $('page-title').textContent=navNames[name];
+  }
+  document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',()=>switchPage(el.dataset.page)));
+
+  function lineChart(data){
+    if(!Array.isArray(data)||!data.length)return '<div class="empty">ยังไม่มีข้อมูล</div>';
+    const width=600,height=210,left=28,right=14,top=15,bottom=33;
+    const max=Math.max(1,...data.map(x=>Number(x.value)||0));
+    const x=i=>left+i*(width-left-right)/Math.max(1,data.length-1);
+    const y=v=>height-bottom-(Number(v)||0)/max*(height-top-bottom);
+    const path=data.map((d,i)=>(i?'L':'M')+x(i).toFixed(1)+','+y(d.value).toFixed(1)).join(' ');
+    const area=path+' L '+x(data.length-1)+','+(height-bottom)+' L '+left+','+(height-bottom)+' Z';
+    const rows=[0,.5,1].map(t=>`<line x1="${left}" y1="${y(max*t)}" x2="${width-right}" y2="${y(max*t)}" stroke="#e8efe8"/><text x="4" y="${y(max*t)+4}" class="chart-axis">${Math.round(max*t)}</text>`).join('');
+    const dots=data.map((d,i)=>`<circle cx="${x(i)}" cy="${y(d.value)}" r="5" fill="#2b8058" stroke="white" stroke-width="2"/><text x="${x(i)}" y="${height-8}" text-anchor="middle" class="chart-axis">${safe(String(d.day).slice(5))}</text>`).join('');
+    return `<svg viewBox="0 0 ${width} ${height}" role="img" aria-label="กราฟสมาชิกใหม่ 7 วัน">${rows}<path d="${area}" fill="#cdebd9" fill-opacity=".64"/><path d="${path}" fill="none" stroke="#2b8058" stroke-width="3" stroke-linejoin="round"/>${dots}</svg>`;
+  }
+  function draw(){
+    const o=overview;
+    document.querySelector('#page-overview .kpi:nth-child(3) small').textContent='ใกล้หมดอายุ ('+(settings.alert_days||3)+' วัน)';
+    [['k-members',o.members],['k-foods',o.foods],['k-soon',o.soon],['k-eaten',o.eaten],['i-active',o.active_30d],['i-expired',o.expired],['i-feedback',o.feedback_open],['r-eaten',o.eaten],['r-wasted',o.wasted],['r-soon',o.soon]].forEach(([id,n])=>$(id).textContent=fmt(n));
+    const total=Number(o.eaten||0)+Number(o.wasted||0);
+    $('r-rate').textContent=total?Math.round(Number(o.eaten||0)/total*100)+'%':'—';
+    $('r-used-value').textContent=money(insights.used_value);
+    $('r-wasted-value').textContent=money(insights.wasted_value);
+    $('trend-chart').innerHTML=lineChart(insights.registrations);
+    const categories=Array.isArray(insights.categories)?insights.categories:[];
+    const max=Math.max(1,...categories.map(c=>Number(c.value)||0));
+    $('category-chart').innerHTML=categories.length?categories.slice(0,8).map(c=>`<div class="category-row"><span class="category-name">${safe(catNames[c.name]||c.name)}</span><span class="track"><i style="width:${Math.round(Number(c.value)/max*100)}%"></i></span><strong>${fmt(c.value)}</strong></div>`).join(''):'<div class="empty">ยังไม่มีอาหารที่บันทึก</div>';
+    $('updated').textContent='อัปเดต '+date(new Date().toISOString());
+  }
+  function drawMembers(){
+    const q=$('member-search').value.toLowerCase();
+    const filtered=memberData.filter(m=>String(m.email||'').toLowerCase().includes(q));
+    $('member-count').textContent=fmt(filtered.length)+' บัญชี (สูงสุด 1,000 รายการล่าสุด)';
+    $('member-rows').innerHTML=filtered.length?filtered.map(m=>`<tr><td>${safe(m.email)}</td><td>${date(m.joined_at)}</td><td>${fmt(m.food_count)}</td><td>${date(m.pantry_updated_at)}</td><td><span class="tag ${m.disabled?'off':''}">${m.disabled?'ระงับ':'ใช้งานได้'}</span></td><td><button type="button" class="btn ${m.disabled?'btn-ghost':'btn-red'}" data-member-id="${safe(m.id)}" data-disabled="${m.disabled}">${m.disabled?'ปลดระงับ':'ระงับ'}</button></td></tr>`).join(''):'<tr><td colspan="6" class="empty">ไม่พบสมาชิก</td></tr>';
+  }
+  $('member-search').addEventListener('input',drawMembers);
+  $('member-rows').addEventListener('click',async ev=>{
+    const b=ev.target.closest('button[data-member-id]');if(!b)return;
+    const next=b.dataset.disabled!=='true';
+    if(!confirm(next?'ต้องการระงับการใช้งานบัญชีนี้?':'ปลดระงับบัญชีนี้?'))return;
+    b.disabled=true;
+    try{await query(supabase.rpc('emf_admin_set_disabled',{target_id:b.dataset.memberId,new_disabled:next}));toast('อัปเดตสถานะเรียบร้อยแล้ว');await refresh();}
+    catch(e){toast('ทำรายการไม่สำเร็จ: '+e.message);b.disabled=false;}
+  });
+  function drawFeedback(){
+    const category={ai:'AI วิเคราะห์ผิด',bug:'ข้อผิดพลาด',idea:'เสนอไอเดีย',general:'ทั่วไป'};
+    $('feedback-list').innerHTML=feedback.length?feedback.map(f=>`<article class="issue"><div class="issue-top"><span class="tag ${f.status==='resolved'?'':'off'}">${f.status==='resolved'?'เรียบร้อย':'รอจัดการ'}</span><b style="font-size:12px">${safe(category[f.category]||f.category)}</b><small>${date(f.created_at)}</small></div><p>${safe(f.message)}</p><small>ผู้แจ้ง: ${safe(memberData.find(m=>m.id===f.user_id)?.email||'สมาชิก')}</small><div class="issue-actions"><button type="button" class="btn btn-ghost" data-feedback-id="${safe(f.id)}" data-status="${f.status==='open'?'resolved':'open'}">${f.status==='open'?'✓ ทำเครื่องหมายว่าแก้แล้ว':'↶ เปิดเรื่องอีกครั้ง'}</button></div></article>`).join(''):'<div class="empty">ยังไม่มีข้อความจากสมาชิก ✨</div>';
+  }
+  $('feedback-list').addEventListener('click',async ev=>{
+    const b=ev.target.closest('button[data-feedback-id]');if(!b)return;b.disabled=true;
+    try{await query(supabase.rpc('emf_admin_resolve_feedback',{target_id:b.dataset.feedbackId,new_status:b.dataset.status}));toast('อัปเดตข้อความเรียบร้อย');await refresh();}
+    catch(e){toast('ไม่สำเร็จ: '+e.message);b.disabled=false;}
+  });
+  function drawSettings(){$('alert-days').value=String(settings.alert_days||3);$('announcement').value=settings.announcement||'';}
+  function drawAudit(rows){$('audit-rows').innerHTML=rows.length?rows.map(r=>`<tr><td>${date(r.created_at)}</td><td>${safe(r.action)}</td><td>${safe(r.target_user||'—')}</td><td>${safe(JSON.stringify(r.detail||{}))}</td></tr>`).join(''):'<tr><td colspan="4" class="empty">ยังไม่มีรายการเปลี่ยนแปลง</td></tr>';}
+
+  async function refresh(){
+    if(!supabase||!user)return;
+    $('refresh').disabled=true;notice('กำลังดึงข้อมูลจากระบบ…');
+    try{
+      const [o,i,m,f,s,a]=await Promise.all([
+        query(supabase.rpc('emf_admin_overview')),
+        query(supabase.rpc('emf_admin_insights')),
+        query(supabase.rpc('emf_admin_members')),
+        query(supabase.from('emf_feedback').select('id,user_id,category,message,status,created_at').order('created_at',{ascending:false}).limit(100)),
+        query(supabase.from('emf_settings').select('alert_days,announcement').eq('id',1).single()),
+        query(supabase.from('emf_admin_audit').select('created_at,action,target_user,detail').order('created_at',{ascending:false}).limit(100))
+      ]);
+      overview=o||{};insights=i||{};memberData=m||[];feedback=f||[];settings=s||{};
+      draw();drawMembers();drawFeedback();drawSettings();drawAudit(a||[]);notice('');
+    }catch(e){notice('โหลดข้อมูลบางส่วนไม่สำเร็จ: '+e.message,true);}
+    finally{$('refresh').disabled=false;}
+  }
+  $('refresh').addEventListener('click',refresh);$('refresh-feedback').addEventListener('click',refresh);
+  $('settings-form').addEventListener('submit',async ev=>{
+    ev.preventDefault();const days=Number($('alert-days').value),text=$('announcement').value.trim();
+    const btn=ev.currentTarget.querySelector('button[type=submit]');btn.disabled=true;
+    try{await query(supabase.rpc('emf_admin_update_settings',{new_alert_days:days,new_announcement:text}));toast('บันทึกการตั้งค่าแล้ว');await refresh();}
+    catch(e){toast('บันทึกไม่สำเร็จ: '+e.message);}finally{btn.disabled=false;}
+  });
+  function downloadCsv(name,rows){
+    const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replaceAll('"','""')+'"').join(',')).join('\r\n');
+    const a=document.createElement('a'),url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+    a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),3000);
+  }
+  $('export-members').addEventListener('click',()=>downloadCsv('EatMeFirst_Members.csv',[
+    ['Email','Joined','Foods','Last Sync','Disabled'],...memberData.map(m=>[m.email,m.joined_at,m.food_count,m.pantry_updated_at,m.disabled])
+  ]));
+  $('export-report').addEventListener('click',()=>downloadCsv('EatMeFirst_Impact.csv',[
+    ['Metric','Value'],...Object.entries(overview),['Used value (reported)',insights.used_value],['Wasted value (reported)',insights.wasted_value],
+    ...((insights.categories||[]).map(c=>['Category '+c.name,c.value]))
+  ]));
+  async function logout(){if(supabase)await supabase.auth.signOut({scope:'local'});user=null;$('gate-logout').hidden=true;$('admin-login').hidden=false;showGate('เข้าสู่ระบบด้วยบัญชี Admin เพื่อใช้งาน');}
+  $('logout').addEventListener('click',logout);$('gate-logout').addEventListener('click',logout);
+
+  async function validateAdmin(session){
+    if(!session?.user){user=null;$('gate-logout').hidden=true;$('admin-login').hidden=false;showGate('กรุณาเข้าสู่ระบบด้วยบัญชีผู้ดูแล');return;}
+    user=session.user;
+    try{
+      const permitted=await query(supabase.rpc('emf_is_admin'));
+      if(!permitted){showGate('บัญชีนี้ยังไม่มีสิทธิ์ Admin โปรดให้เจ้าของโปรเจกต์เพิ่มสิทธิ์ผ่าน SQL Editor',true);$('admin-login').hidden=true;$('gate-logout').hidden=false;return;}
+      showAdmin();await refresh();
+    }catch(e){showGate('ตรวจสอบสิทธิ์ไม่สำเร็จ: '+e.message,true);$('gate-logout').hidden=false;}
+  }
+  $('admin-login').addEventListener('submit',async ev=>{
+    ev.preventDefault();const btn=ev.currentTarget.querySelector('button[type=submit]');btn.disabled=true;
+    try{
+      if($('email').value.trim().toLowerCase()!==ADMIN_USERNAME)throw new Error('ชื่อผู้ใช้แอดมินไม่ถูกต้อง');
+      const data=await query(supabase.auth.signInWithPassword({email:ADMIN_AUTH_EMAIL,password:$('password').value}));
+      await validateAdmin(data.session);
+    }
+    catch(e){
+      const isCredentialsError=/invalid login credentials/i.test(String(e.message||''));
+      msg(isCredentialsError?'บัญชี Admin ยังไม่ได้สร้างใน Supabase หรือรหัสผ่านไม่ตรง':('เข้าสู่ระบบไม่สำเร็จ: '+e.message),true);
+    }finally{btn.disabled=false;}
+  });
+  async function loadScript(){return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';s.onload=resolve;s.onerror=()=>reject(new Error('ไม่สามารถโหลด Supabase JS ได้'));document.head.appendChild(s);});}
+  (async()=>{
+    if(!valid){showGate('ยังไม่ได้ตั้งค่า Project URL และ Publishable Key ใน eatmefirst-config.js',true);$('admin-login').hidden=true;return;}
+    try{await loadScript();supabase=window.supabase.createClient(config.url.replace(/\/$/,''),config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+      supabase.auth.onAuthStateChange((event,session)=>{if(event==='SIGNED_OUT'){user=null;showGate('ออกจากระบบแล้ว');$('admin-login').hidden=false;}});
+      const {data,error}=await supabase.auth.getSession();if(error)throw error;
+      $('admin-login').hidden=false;await validateAdmin(data.session);
+    }catch(e){showGate('เชื่อมต่อไม่สำเร็จ: '+e.message,true);$('admin-login').hidden=true;}
+  })();
+})();
+</script>
+</body>
+</html>
